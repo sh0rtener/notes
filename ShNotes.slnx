@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Core/">
+    <Project Path="src/Core/ShNotes.Core/ShNotes.Core.csproj" />
+    <Project Path="src/Core/ShNotes.UseCases/ShNotes.UseCases.csproj" />
+  </Folder>
+  <Folder Name="/src/Infra/">
+    <Project Path="src/Infra/ShNotes.Data/ShNotes.Data.csproj" />
+  </Folder>
+  <Folder Name="/src/Presenters/">
+    <Project Path="src/Presenters/ShNotes.WebApi/ShNotes.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ShNotes.Tests/ShNotes.Tests.csproj" />
+  </Folder>
+</Solution>
