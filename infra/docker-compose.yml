@@ -1,0 +1,46 @@
+ame: test-nginx-balancer
+
+services:
+  notes-api1:
+    image: notes-api1
+    hostname: notes-api1
+    container_name: notes-api1
+    restart: always
+    build:
+      context: ../server/
+      dockerfile: Dockerfile
+    ports:
+      - 1111:8080
+
+  notes-api2:
+    image: notes-api2
+    hostname: notes-api2
+    container_name: notes-api2
+    restart: always
+    build:
+      context: ../server/
+      dockerfile: Dockerfile
+    ports:
+      - 2222:8080
+
+  notes-api3:
+    image: notes-api3
+    hostname: notes-api3
+    container_name: notes-api3
+    restart: always
+    build:
+      context: ../src/
+      dockerfile: Dockerfile
+    ports:
+      - 3333:8080
+
+  balancer-nginx:
+    image: balancer-nginx
+    hostname: ngx
+    container_name: ngx
+    restart: always
+    build:
+      context: nginx/
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
