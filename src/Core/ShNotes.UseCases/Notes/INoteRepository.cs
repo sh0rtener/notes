@@ -1,12 +1,33 @@
 namespace ShNotes.UseCases.Notes;
 
-public record GetNoteFilter(
-    string? Name,
-    string? Status,
-    DateTime? DateFrom,
-    int Limit = 100,
-    int Offset = 0
-);
+public sealed class GetNoteFilter
+{
+    /// <summary>
+    /// Наименование заметки
+    /// </summary>
+    public string? Name { get; set; }
+
+    /// <summary>
+    /// Статус заявки, может принимать значения:
+    /// (new - новая заметка; onwork - заявка в работе; completed - готовые)
+    /// </summary>
+    public string? Status { get; set; }
+
+    /// <summary>
+    /// Дата обновления заметки
+    /// </summary>
+    public DateTime? DateFrom { get; set; }
+
+    /// <summary>
+    /// Лимит данных
+    /// </summary>
+    public int Limit { get; set; } = 100;
+
+    /// <summary>
+    /// Отступ от первичного значения
+    /// </summary>
+    public int Offset { get; set; } = 0;
+}
 
 public interface INoteRepository
 {
