@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using ShNotes.Core;
+using ShNotes.UseCases;
 using ShNotes.WebApi.Common;
 
 namespace ShNotes.WebApi.Middlewares;
@@ -20,9 +21,9 @@ public sealed class EndpointHandlerMiddleware
         {
             await _next(httpContext);
         }
-        catch (Exception ex) when (ex is CoreException || ex is InvalidDataException)
+        catch (Exception ex) when (ex is CoreException || ex is InvalidDataException || ex is UseCaseException)
         {
-            var request = new ApiResponse<object>() { Message = ex.Message };
+            var request = new ApiResponse<object>() { Message = ex.Message.Trim() };
 
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;

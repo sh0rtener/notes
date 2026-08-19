@@ -9,7 +9,7 @@ public sealed class NoteStatus : ValueObject
     public static NoteStatus OnWork => new("onwork");
     public static NoteStatus Completed => new("completed");
 
-    private NoteStatus(string name) => _name = name;
+    public NoteStatus(string name) => _name = name;
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

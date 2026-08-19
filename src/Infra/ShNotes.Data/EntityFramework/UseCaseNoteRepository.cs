@@ -33,12 +33,6 @@ public sealed class UseCaseNoteRepository : INoteRepository
             .Notes.FromSqlRaw(_scriptProvider.GetNotes, parameters.ToArray())
             .ToListAsync(cancellationToken);
 
-        return notes.Select(x => new ShortNoteDto()
-        {
-            Id = x.Id,
-            Name = x.Name,
-            Status = x.Status,
-            UpdatedAt = x.UpdatedAt,
-        });
+        return _mapper.Map<IEnumerable<ShortNoteDto>>(notes);
     }
 }

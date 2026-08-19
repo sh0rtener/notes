@@ -14,10 +14,11 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        services.AddAutoMapper(c => Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(c => { c.AddMaps(Assembly.GetExecutingAssembly()); });
         services.AddScoped<IScriptProvider, SqliteScriptProvider>();
         services.AddEf(configuration);
         services.AddScoped<INoteRepository, UseCaseNoteRepository>();
+        services.AddScoped<Core.Notes.INoteRepository, NoteRepository>();
 
         return services;
     }
