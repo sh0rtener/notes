@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\ShNotes.UseCases\ShNotes.UseCases.csproj" />
+    <ProjectReference Include="..\..\Infra\ShNotes.Caching\ShNotes.Caching.csproj" />
     <ProjectReference Include="..\..\Infra\ShNotes.Data\ShNotes.Data.csproj" />
   </ItemGroup>
 

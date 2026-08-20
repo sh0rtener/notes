@@ -5,6 +5,11 @@ namespace ShNotes.UseCases.Notes.GetNotes;
 public sealed class GetNotesQuery : IRequest<IEnumerable<ShortNoteDto>>
 {
     public required GetNoteFilter Filter { get; set; }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Filter.Name, Filter.Status, Filter.Limit, Filter.Offset);
+    }
 }
 
 public sealed class GetNotesQueryHandler : IRequestHandler<GetNotesQuery, IEnumerable<ShortNoteDto>>
