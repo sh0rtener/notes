@@ -50,7 +50,7 @@ public sealed class SqliteScriptProvider : IScriptProvider
             INSERT INTO 
                 notes (name, description, status, created_at, updated_at, user_id)
             VALUES 
-                (@name, @description, @status, @created_at, @updated_at, user_id)
+                (@name, @description, @status, @created_at, @updated_at, @user_id)
             RETURNING id;
             """;
 
