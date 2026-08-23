@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ShNotes.UseCases.Notes;
 using ShNotes.UseCases.Notes.AddNote;
@@ -17,6 +19,10 @@ namespace ShNotes.WebApi.Controllers;
 [Route("notes")]
 public sealed class NotesController : ControllerBase
 {
+    private int UserId =>
+        int.Parse(
+            User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? "0"
+        );
     private readonly IMediator _mediator;
 
     public NotesController(IMediator mediator)
@@ -32,6 +38,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Список заметок относительно заданных фильтров</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpGet("all")]
     [ProducesResponseType(
         typeof(SuccessApiResponse<IEnumerable<ShortNoteDto>>),
@@ -43,6 +50,7 @@ public sealed class NotesController : ControllerBase
         CancellationToken cancellationToken
     )
     {
+        getNoteFilter.UserId = int.Parse(UserId.ToString());
         var result = await _mediator.Send(
             new GetNotesQuery() { Filter = getNoteFilter },
             cancellationToken
@@ -59,12 +67,16 @@ public sealed class NotesController : ControllerBase
     /// <returns>Заметка</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpGet]
     [ProducesResponseType(typeof(SuccessApiResponse<NoteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get([FromQuery] int id, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(new GetNoteQuery() { Id = id }, cancellationToken);
+        var result = await _mediator.Send(
+            new GetNoteQuery() { Id = id, UserId = int.Parse(UserId.ToString()) },
+            cancellationToken
+        );
         return this.SendOkResult(result);
     }
 
@@ -76,6 +88,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Идентификатор добавленной заявки</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(typeof(SuccessApiResponse<int>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
@@ -85,7 +98,12 @@ public sealed class NotesController : ControllerBase
     )
     {
         var result = await _mediator.Send(
-            new AddNoteCommand() { Name = request.Name, Description = request.Description },
+            new AddNoteCommand()
+            {
+                Name = request.Name,
+                Description = request.Description,
+                UserId = int.Parse(UserId.ToString()),
+            },
             cancellationToken
         );
 
@@ -101,6 +119,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Обновленная модель</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpPatch("{id}/name")]
     [ProducesResponseType(typeof(SuccessApiResponse<NoteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
@@ -126,6 +145,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Обновленная модель</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpPatch("{id}/description")]
     [ProducesResponseType(typeof(SuccessApiResponse<NoteDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
@@ -150,6 +170,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Статус заметки</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpPatch("{id}/to-work")]
     [ProducesResponseType(typeof(SuccessApiResponse<NoteStatusEnum>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
@@ -170,6 +191,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Статус заметки</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpPatch("{id}/complete")]
     [ProducesResponseType(typeof(SuccessApiResponse<NoteStatusEnum>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
@@ -190,6 +212,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Идентификатор удаленной заметки</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
+    [Authorize]
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(SuccessApiResponse<int>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]

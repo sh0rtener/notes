@@ -6,6 +6,7 @@ using ShNotes.WebApi;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.RegisterJwt(builder.Configuration);
+builder.Services.AddJwtAuth(builder.Configuration);
 builder.Services.AddData(builder.Configuration);
 builder.Services.AddUseCases();
 builder.Services.AddControllers();

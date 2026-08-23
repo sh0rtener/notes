@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using ShNotes.UseCases.Users.CreateUser;
@@ -15,6 +16,10 @@ namespace ShNotes.WebApi.Controllers;
 [Route("users")]
 public sealed class UserController : ControllerBase
 {
+    private int UserId =>
+        int.Parse(
+            User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value ?? "0"
+        );
     private readonly IMediator _mediator;
     private readonly JwtService _jwtService;
 
@@ -24,11 +29,12 @@ public sealed class UserController : ControllerBase
         _jwtService = new JwtService(options);
     }
 
-    [HttpGet("{tempId}")]
-    public async Task<IActionResult> Get(int tempId, CancellationToken cancellationToken)
+    [Authorize]
+    [HttpGet()]
+    public async Task<IActionResult> Get(CancellationToken cancellationToken)
     {
         var result = await _mediator.Send(
-            new GetUserQuery() { UserId = tempId },
+            new GetUserQuery() { UserId = int.Parse(UserId.ToString()) },
             cancellationToken
         );
         return this.SendOkResult(result);
