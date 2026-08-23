@@ -17,9 +17,9 @@ public sealed class NoteRepository : INoteRepository
         _mapper = mapper;
     }
 
-    public async Task<int> Add(Note note, CancellationToken cancellationToken = default)
+    public async Task<int> Add(int userId, Note note, CancellationToken cancellationToken = default)
     {
-        var parameters = _scriptProvider.AddNoteParameters(note);
+        var parameters = _scriptProvider.AddNoteParameters(note, userId);
         var noteId = (
             await _context
                 .Database.SqlQueryRaw<int>(_scriptProvider.AddNote, parameters.ToArray())

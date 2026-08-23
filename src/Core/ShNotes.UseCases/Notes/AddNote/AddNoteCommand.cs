@@ -8,6 +8,7 @@ public sealed class AddNoteCommand : IRequest<int>
 {
     public required string Name { get; set; }
     public string Description { get; set; } = null!;
+    public int UserId { get; set; }
 }
 
 public sealed class AddNoteCommandHandler : IRequestHandler<AddNoteCommand, int>
@@ -22,7 +23,7 @@ public sealed class AddNoteCommandHandler : IRequestHandler<AddNoteCommand, int>
     public async Task<int> Handle(AddNoteCommand request, CancellationToken cancellationToken)
     {
         var note = new Note(request.Name, request.Description, NoteStatus.New);
-        var addedId = await _noteRepository.Add(note, cancellationToken);
+        var addedId = await _noteRepository.Add(request.UserId, note, cancellationToken);
 
         return addedId;
     }

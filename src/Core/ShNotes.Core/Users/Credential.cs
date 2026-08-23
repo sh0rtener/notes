@@ -10,10 +10,11 @@ public sealed class Credential : Entity<int>
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     private Pbkd2Sha256Alghoritm cypherService = new Pbkd2Sha256Alghoritm();
 
-    public Credential(string passwordHash, string passwordSalt)
+    public Credential() { }
+
+    public Credential(string password)
     {
-        PasswordHash = passwordHash;
-        PasswordSalt = passwordSalt;
+        CreatePassword(password);
     }
 
     public void ChangePassword(string oldPassword, string password)
@@ -22,7 +23,7 @@ public sealed class Credential : Entity<int>
         CreatePassword(password);
     }
 
-    private void CreatePassword(string password)
+    public void CreatePassword(string password)
     {
         var encryptedPair = cypherService.Crypt(password);
         PasswordHash = encryptedPair.Hash;

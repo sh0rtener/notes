@@ -6,6 +6,7 @@ namespace ShNotes.Data.EntityFramework.Contexts;
 public sealed class AppDbContext : DbContext
 {
     public DbSet<NoteDao> Notes => Set<NoteDao>();
+    public DbSet<UserDao> Users => Set<UserDao>();
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }

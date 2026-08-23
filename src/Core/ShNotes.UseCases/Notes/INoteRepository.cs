@@ -1,7 +1,15 @@
+using System.Text.Json.Serialization;
+
 namespace ShNotes.UseCases.Notes;
 
 public sealed class GetNoteFilter
 {
+    /// <summary>
+    /// Идентификатор пользователя
+    /// </summary>
+    [JsonIgnore]
+    public int UserId { get; set; }
+
     /// <summary>
     /// Наименование заметки
     /// </summary>
@@ -35,4 +43,6 @@ public interface INoteRepository
         GetNoteFilter filter,
         CancellationToken cancellationToken = default
     );
+
+    Task<bool> IsUserNote(int userId, int noteId, CancellationToken cancellationToken = default);
 }

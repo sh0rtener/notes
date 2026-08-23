@@ -35,4 +35,20 @@ public sealed class UseCaseNoteRepository : INoteRepository
 
         return _mapper.Map<IEnumerable<ShortNoteDto>>(notes);
     }
+
+    public async Task<bool> IsUserNote(
+        int userId,
+        int noteId,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var parameters = _scriptProvider.IsUserNoteParameters(userId, noteId);
+        var result = (
+            await _context
+                .Database.SqlQueryRaw<int>(_scriptProvider.IsUserNote, parameters.ToArray())
+                .ToListAsync(cancellationToken)
+        );
+
+        return result is not null && result.Count >= 1;
+    }
 }

@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ShNotes.Core.Users;
 using ShNotes.Data.EntityFramework;
 using ShNotes.UseCases.Notes;
 
@@ -14,11 +15,15 @@ public static class DependencyInjection
         IConfiguration configuration
     )
     {
-        services.AddAutoMapper(c => { c.AddMaps(Assembly.GetExecutingAssembly()); });
+        services.AddAutoMapper(c =>
+        {
+            c.AddMaps(Assembly.GetExecutingAssembly());
+        });
         services.AddScoped<IScriptProvider, SqliteScriptProvider>();
         services.AddEf(configuration);
         services.AddScoped<INoteRepository, UseCaseNoteRepository>();
         services.AddScoped<Core.Notes.INoteRepository, NoteRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }

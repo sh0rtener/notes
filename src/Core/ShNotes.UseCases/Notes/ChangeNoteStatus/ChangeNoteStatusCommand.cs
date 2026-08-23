@@ -5,6 +5,7 @@ namespace ShNotes.UseCases.Notes.ChangeNoteStatus;
 public sealed class ChangeNoteStatusCommand : IRequest
 {
     public int Id { get; set; }
+    public int UserId { get; set; }
     public NoteStatusEnum Status { get; set; }
 }
 
@@ -12,9 +13,15 @@ public sealed class ChangeNoteStatusCommandHandler : IRequestHandler<ChangeNoteS
 {
     private readonly Core.Notes.INoteRepository _noteRepository;
 
-    public ChangeNoteStatusCommandHandler(Core.Notes.INoteRepository noteRepository)
+    private readonly INoteRepository _noteRepositoryUseCase;
+
+    public ChangeNoteStatusCommandHandler(
+        Core.Notes.INoteRepository noteRepository,
+        INoteRepository noteRepositoryUseCase
+    )
     {
         _noteRepository = noteRepository;
+        _noteRepositoryUseCase = noteRepositoryUseCase;
     }
 
     public async Task Handle(ChangeNoteStatusCommand request, CancellationToken cancellationToken)
@@ -23,6 +30,8 @@ public sealed class ChangeNoteStatusCommandHandler : IRequestHandler<ChangeNoteS
 
         if (note is null)
             throw new NoteWasntFoundException();
+        if (!await _noteRepositoryUseCase.IsUserNote(request.UserId, request.Id, cancellationToken))
+            throw new NotePermissionException();
 
         switch (request.Status)
         {

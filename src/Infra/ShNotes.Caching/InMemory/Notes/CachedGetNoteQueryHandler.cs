@@ -10,15 +10,23 @@ public sealed class CachedGetNoteQueryHandler : IRequestHandler<GetNoteQuery, No
 {
     private readonly IMemoryCache _cache;
     private readonly GetNoteQueryHandler _handler;
+    private readonly INoteRepository _noteRepositoryUseCase;
 
-    public CachedGetNoteQueryHandler(IMemoryCache cache, GetNoteQueryHandler inner)
+    public CachedGetNoteQueryHandler(
+        IMemoryCache cache,
+        GetNoteQueryHandler inner,
+        INoteRepository noteRepositoryUseCase
+    )
     {
         _handler = inner;
         _cache = cache;
+        _noteRepositoryUseCase = noteRepositoryUseCase;
     }
 
     public async Task<NoteDto> Handle(GetNoteQuery request, CancellationToken cancellationToken)
     {
+        if (!await _noteRepositoryUseCase.IsUserNote(request.UserId, request.Id, cancellationToken))
+            throw new NotePermissionException();
         _cache.TryGetValue(request.Id.ToString(), out var note);
 
         if (note is not null)
@@ -28,8 +36,7 @@ public sealed class CachedGetNoteQueryHandler : IRequestHandler<GetNoteQuery, No
         _cache.Set(
             "notes_" + request.Id.ToString(),
             result,
-            new MemoryCacheEntryOptions()
-                .SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
+            new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(10))
         );
 
         return result;

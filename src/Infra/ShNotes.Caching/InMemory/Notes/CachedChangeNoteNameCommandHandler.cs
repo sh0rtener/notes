@@ -9,12 +9,15 @@ public sealed class CachedChangeNoteNameCommandHandler
     : IRequestHandler<ChangeNoteNameCommand, NoteDto>
 {
     private readonly ChangeNoteNameCommandHandler _inner;
+    private readonly INoteRepository _noteRepositoryUseCase;
 
     public CachedChangeNoteNameCommandHandler(
-        ChangeNoteNameCommandHandler inner
+        ChangeNoteNameCommandHandler inner,
+        INoteRepository noteRepositoryUseCase
     )
     {
         _inner = inner;
+        _noteRepositoryUseCase = noteRepositoryUseCase;
     }
 
     public async Task<NoteDto> Handle(
@@ -22,6 +25,8 @@ public sealed class CachedChangeNoteNameCommandHandler
         CancellationToken cancellationToken
     )
     {
+        if (!await _noteRepositoryUseCase.IsUserNote(request.UserId, request.Id, cancellationToken))
+            throw new NotePermissionException();
         await CacheInvalidator.GetInstance().AddCacheCts.CancelAsync();
         return await _inner.Handle(request, cancellationToken);
     }
