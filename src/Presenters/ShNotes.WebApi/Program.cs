@@ -2,10 +2,10 @@ using ShNotes.Caching;
 using ShNotes.Data;
 using ShNotes.UseCases;
 using ShNotes.WebApi;
-using ShNotes.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.RegisterJwt(builder.Configuration);
 builder.Services.AddData(builder.Configuration);
 builder.Services.AddUseCases();
 builder.Services.AddControllers();
@@ -23,6 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+
 // app.UseMiddleware<EndpointHandlerMiddleware>();
 
 app.Run();

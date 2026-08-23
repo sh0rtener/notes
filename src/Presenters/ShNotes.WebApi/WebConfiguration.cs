@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using ShNotes.WebApi.Jwt;
 
 namespace ShNotes.WebApi;
 
@@ -28,6 +29,17 @@ public static class WebConfiguration
             var xmlPath = Path.Combine(basePath, "ShNotes.WebApi.xml");
             o.IncludeXmlComments(xmlPath);
         });
+
+        return services;
+    }
+
+    public static IServiceCollection RegisterJwt(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
+    {
+        services.AddOptions();
+        services.Configure<JwtConfiguration>(configuration.GetSection("Jwt"));  
 
         return services;
     }
