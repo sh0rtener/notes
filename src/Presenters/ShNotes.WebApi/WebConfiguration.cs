@@ -64,6 +64,7 @@ public static class WebConfiguration
     {
         services.AddOptions();
         services.Configure<JwtConfiguration>(configuration.GetSection("Jwt"));
+        services.AddTransient<JwtService>();
 
         return services;
     }

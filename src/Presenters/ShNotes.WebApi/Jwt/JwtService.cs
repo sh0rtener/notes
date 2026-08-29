@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ShNotes.WebApi.Models.Notes;
 
 namespace ShNotes.WebApi.Jwt;
 
@@ -13,6 +14,34 @@ public class JwtService
     public JwtService(IOptions<JwtConfiguration> configuration)
     {
         Configuration = configuration.Value;
+    }
+
+    public SignInResponse GenerateTokenResponse(int userId, string userName)
+    {
+        var accessExpiresAt = DateTime.Now.AddMinutes(Configuration.AccessTokenExpires);
+        var refreshExpiresAt = DateTime.Now.AddMinutes(Configuration.RefreshTokenExpires);
+
+        var accessClaims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+        };
+
+        var refreshClaims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
+            new(ClaimTypes.Thumbprint, userName),
+        };
+
+        var accessToken = CreateToken(accessClaims, accessExpiresAt);
+        var refreshToken = CreateToken(refreshClaims, refreshExpiresAt);
+
+        return new SignInResponse
+        {
+            AccessToken = WriteToken(accessToken),
+            RefreshToken = WriteToken(refreshToken),
+            ExpiresAt = accessExpiresAt,
+            RefreshExpiresAt = refreshExpiresAt,
+        };
     }
 
     public JwtSecurityToken CreateToken(List<Claim> claims, DateTime expires)
