@@ -1,0 +1,8 @@
+@use './variables' as *;
+@use './fonts' as *;
+
+body {
+    background: $background-primary;
+    color: $color-primary;
+    font-family: 'Roboto';
+}

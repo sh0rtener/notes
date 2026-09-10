@@ -18,6 +18,11 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/web",
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/app/styles"
+              ]
+            },
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -32,7 +37,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/app/styles/main.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

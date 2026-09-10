@@ -1,0 +1,24 @@
+@use 'variables' as *;
+
+.note-status-badge {
+    width: fit-content;
+    border-radius: $border-radius-px;
+
+    p {
+        margin: 5px;
+        width: fit-content;
+        color: $color-secondary;
+    }
+}
+
+.new {
+    background: $color-new-note;
+}
+
+.onwork {
+    background: $color-on-work;
+}
+
+.completed {
+    background: $color-complete;
+}

@@ -1,0 +1,14 @@
+<div class="note-card">
+    <div class="note-card__description">
+        <div class="note-card__header">
+            <h3>{{ note().name }}</h3>
+            <app-note-status-badge [status]="note().status"></app-note-status-badge>
+        </div>
+        <p class="note-card__date">{{ note().updatedAt | date:'yyyy-MM-dd' }}</p>
+    </div>
+    @if (!isComplete()) {
+    <div class="note-card__interactive">
+        <p class="note-card__interactive__complete" (click)="completeNote()">o</p>
+    </div>
+    }
+</div>
