@@ -1,0 +1,11 @@
+@use 'variables' as *;
+
+.notes-list {
+    background: $background-secondary2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: $padding-topbottom $padding-leftright;
+    border-radius: $border-radius-px;
+    height: 90vh;
+}
