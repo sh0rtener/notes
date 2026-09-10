@@ -38,7 +38,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Список заметок относительно заданных фильтров</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
-    [Authorize]
+    // [Authorize]
     [HttpGet("all")]
     [ProducesResponseType(
         typeof(SuccessApiResponse<IEnumerable<ShortNoteDto>>),
@@ -50,7 +50,9 @@ public sealed class NotesController : ControllerBase
         CancellationToken cancellationToken
     )
     {
-        getNoteFilter.UserId = int.Parse(UserId.ToString());
+        // getNoteFilter.UserId = int.Parse(UserId.ToString());
+        
+        getNoteFilter.UserId = 7;
         var result = await _mediator.Send(
             new GetNotesQuery() { Filter = getNoteFilter },
             cancellationToken

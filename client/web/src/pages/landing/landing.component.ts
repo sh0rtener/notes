@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { Note, NoteCardComponent } from "../../entities/note";
+import { Component, inject, OnInit, signal } from "@angular/core";
+import { Note, NoteApiService, NoteCardComponent } from "../../entities/note";
 import { NotesListComponent } from "../../widgets/notes-list/ui/notes-list.component";
 
 
@@ -7,15 +7,17 @@ import { NotesListComponent } from "../../widgets/notes-list/ui/notes-list.compo
     selector: 'app-landing',
     templateUrl: './landing.component.html',
     styleUrl: './landing.component.scss',
-    imports: [NoteCardComponent, NotesListComponent]
+    imports: [NotesListComponent]
 })
 
-export class LandingComponent {
-    notes: Note[] =
-        [
-            { id: 1, name: "Задача #1", description: "", status: "onwork", createdAt: new Date(), updatedAt: new Date() },
-            { id: 2, name: "Задача #2", description: "", status: "onwork", createdAt: new Date(), updatedAt: new Date() },
-            { id: 3, name: "Задача #3", description: "", status: "onwork", createdAt: new Date(), updatedAt: new Date() },
-        ]
+export class LandingComponent implements OnInit {
 
+    private readonly noteApi = inject(NoteApiService);
+    readonly notes = signal<Note[]>([]);
+
+    ngOnInit(): void {
+        this.noteApi.getNotes().subscribe(response => {
+            this.notes.set(response.data ?? []);
+        });
+    }
 }

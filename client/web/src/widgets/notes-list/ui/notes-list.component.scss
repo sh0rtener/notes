@@ -7,5 +7,6 @@
     gap: 16px;
     padding: $padding-topbottom $padding-leftright;
     border-radius: $border-radius-px;
+    overflow-y: scroll;
     height: 90vh;
 }
