@@ -10,14 +10,5 @@ import { PrimaryButtonComponent } from "../../shared/ui/button/button/button.com
 })
 
 export class LandingComponent {
-    rotationLogoX = 0;
-    rotationLogoY = 0;
-
-    onMouseMove(event: MouseEvent) {
-        const x = event.clientX / window.innerWidth;
-        const y = event.clientY / window.innerHeight;
-
-        this.rotationLogoY = (x - 0.5) * 20;
-        this.rotationLogoX = -(y - 0.5) * 20;
-    }
+    
 }
