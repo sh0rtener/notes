@@ -1,0 +1,8 @@
+@use 'variables' as *;
+
+.register-form {
+    width: fit-content;
+    padding: $padding-topbottom $padding-leftright;
+    background: $background-secondary;
+    border-radius: $border-radius-px;
+}

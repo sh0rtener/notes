@@ -1,0 +1,22 @@
+@use 'variables' as *;
+
+.input {
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    gap: 15px;
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        border: none;
+        background: $background-secondary2;
+        padding: $padding-topbottom $padding-leftright;
+        border-radius: $border-radius-px;
+        color: $color-primary;
+        font-family: $font-primary;
+        font-size: 18px;
+    }
+}
