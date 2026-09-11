@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+.landing {
+    padding: $padding-topbottom $padding-leftright;
+
+    .landing__welcome {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        .landing__welcome__left {
+            width: 30%;
+            
+            h1 {
+                font-size: 60px;
+            }
+
+            p {
+                font-size: 24px;
+            }
+        }
+
+        .landing__welcome__right {}
+    }
+}
