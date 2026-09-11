@@ -1,23 +1,13 @@
-import { Component, inject, OnInit, signal } from "@angular/core";
-import { Note, NoteApiService, NoteCardComponent } from "../../entities/note";
-import { NotesListComponent } from "../../widgets/notes-list/ui/notes-list.component";
-
+import { Component } from "@angular/core";
+import { UnauthHeaderComponent } from "../../widgets/unauthorized-header/ui/unauth-header.component";
 
 @Component({
-    selector: 'app-landing',
+    selector: 'app-landing-page',
     templateUrl: './landing.component.html',
     styleUrl: './landing.component.scss',
-    imports: [NotesListComponent]
+    imports: [UnauthHeaderComponent]
 })
 
-export class LandingComponent implements OnInit {
+export class LandingComponent {
 
-    private readonly noteApi = inject(NoteApiService);
-    readonly notes = signal<Note[]>([]);
-
-    ngOnInit(): void {
-        this.noteApi.getNotes().subscribe(response => {
-            this.notes.set(response.data ?? []);
-        });
-    }
 }

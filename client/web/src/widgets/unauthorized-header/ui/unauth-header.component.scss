@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+.unauth-header {
+    padding: $padding-topbottom $padding-leftright;
+    background: $background-secondary;
+    border-radius: $border-radius-px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .unauth-header__logo {
+        width: 150px;
+
+        img {
+            width: inherit;
+        }
+    }
+}

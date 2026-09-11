@@ -1,0 +1,32 @@
+@use 'variables' as *;
+
+button {
+  padding: 1em 3.5em;
+  border: none;
+  font-weight: 600;
+  font-family: $font-primary;
+  border-radius: 25px;
+  transition: 0.2s ease-in;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.primary {
+  background: $color-primary;
+  color: $color-secondary;
+}
+
+.alternative {
+  background: $background-secondary2;
+  color: $color-primary;
+}
+
+.primary:hover {
+  background: $background-primary;
+  color: $color-primary;
+}
+
+.alternative:hover {
+  background: $background-primary;
+  color: $color-primary;
+}
