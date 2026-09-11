@@ -4,6 +4,7 @@
     padding: $padding-topbottom $padding-leftright;
     background: $background-secondary;
     border-radius: $border-radius-px;
+    height: 50px;
 
     display: flex;
     flex-direction: row;
@@ -11,6 +12,7 @@
     justify-content: space-between;
 
     .unauth-header__logo {
+        cursor: pointer;
         width: 150px;
 
         img {
