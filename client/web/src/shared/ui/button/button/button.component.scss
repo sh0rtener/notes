@@ -21,6 +21,11 @@ button {
   color: $color-primary;
 }
 
+.error {
+  background: $color-error;
+  color: $color-primary;
+}
+
 .primary:hover {
   background: $background-primary;
   color: $color-primary;
@@ -30,3 +35,10 @@ button {
   background: $background-primary;
   color: $color-primary;
 }
+
+
+.error:hover {
+  background: $background-primary;
+  color: $color-primary;
+}
+
