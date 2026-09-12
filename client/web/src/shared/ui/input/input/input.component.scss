@@ -4,7 +4,7 @@
     display: flex;
     width: fit-content;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
 
     label {
         font-weight: bold;
@@ -18,5 +18,11 @@
         color: $color-primary;
         font-family: $font-primary;
         font-size: 18px;
+    }
+
+    .error {
+        color: $color-error;
+        font-size: 10px;
+        margin: 0;
     }
 }

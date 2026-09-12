@@ -7,4 +7,10 @@
 
     <input [id]="id()" [type]="type()" [placeholder]="placeholder()" [disabled]="disabled()" [value]="value"
         (input)="onInput($event)" (blur)="onTouched()" />
+    @if (control()?.invalid && control()?.touched)
+    {
+        <span class="error">
+            {{ errorMessage() }}
+        </span>
+    }
 </div>

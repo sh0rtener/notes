@@ -1,10 +1,17 @@
-import { Component, input } from "@angular/core"; 
-import { ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, inject, input } from "@angular/core";
+import { AbstractControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
     selector: 'app-input',
     templateUrl: './input.component.html',
-    styleUrl: './input.component.scss'
+    styleUrl: './input.component.scss',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputComponent),
+            multi: true
+        }
+    ]
 })
 
 export class InputComponent implements ControlValueAccessor {
@@ -15,10 +22,15 @@ export class InputComponent implements ControlValueAccessor {
     disabled = input<boolean>();
     value = '';
 
+
+    control = input<AbstractControl | null>(null);
+
+
     onInput(event: Event) {
         const input = event.target as HTMLInputElement;
 
         this.value = input.value;
+        this.onChange(this.value);
     }
 
 
@@ -41,5 +53,28 @@ export class InputComponent implements ControlValueAccessor {
     }
 
     setDisabledState(isDisabled: boolean): void {
+    }
+
+    errorMessage(): string | null {
+        const errors = this.control()?.errors;
+        
+
+        if (!errors) {
+            return null;
+        }
+
+        if (errors['required']) {
+            return 'Поле обязательно';
+        }
+
+        if (errors['minlength']) {
+            return `Минимум ${errors['minlength'].requiredLength} символов`;
+        }
+
+        if (errors['maxlength']) {
+            return `Максимум ${errors['maxlength'].requiredLength} символов`;
+        }
+
+        return 'Некорректное значение';
     }
 }

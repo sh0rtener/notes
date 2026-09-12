@@ -1,6 +1,9 @@
-<form class="register-form">
-    <app-input id="login" type="text" label="Логин"></app-input>
-    <app-input id="password1" type="password" label="Пароль"></app-input>
-    <app-input id="password2" type="password" label="Пароль еще раз"></app-input>
-    <app-primary-button>Зарегистрироваться</app-primary-button>
+<form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <app-input id="login" type="text" label="Логин" formControlName="login"
+        [control]="registerForm.controls.login"></app-input>
+    <app-input id="password1" type="password" label="Пароль" formControlName="password"
+        [control]="registerForm.controls.password"></app-input>
+    <app-input id="password2" type="password" label="Пароль еще раз" formControlName="passwordRepeat"
+        [control]="registerForm.controls.passwordRepeat"></app-input>
+    <app-primary-button buttonType="submit">Зарегистрироваться</app-primary-button>
 </form>
