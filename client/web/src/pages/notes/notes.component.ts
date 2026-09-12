@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from "@angular/core";
+import { afterNextRender, Component, inject, OnInit, signal } from "@angular/core";
 import { Note, NoteApiService, NoteCardComponent } from "../../entities/note";
 import { NotesListComponent } from "../../widgets/notes-list/ui/notes-list.component";
 
@@ -10,14 +10,24 @@ import { NotesListComponent } from "../../widgets/notes-list/ui/notes-list.compo
     imports: [NotesListComponent]
 })
 
-export class NotesComponent implements OnInit {
+export class NotesComponent {
 
     private readonly noteApi = inject(NoteApiService);
     readonly notes = signal<Note[]>([]);
 
-    ngOnInit(): void {
-        this.noteApi.getNotes().subscribe(response => {
-            this.notes.set(response.data ?? []);
+    constructor() {
+        afterNextRender(() => {
+            this.loadNotes();
+        });
+    }
+
+    private loadNotes() {
+        this.noteApi.getNotes().subscribe({
+            next: response => {
+                this.notes.set(response.data ?? []);
+            },
+            error: error => {
+            }
         });
     }
 }

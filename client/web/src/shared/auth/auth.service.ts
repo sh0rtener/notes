@@ -72,13 +72,13 @@ export class AuthService {
 
         if (!refreshExpires) { return false; }
 
-        return new Date(refreshExpires).getDate() > Date.now();
+        return new Date(refreshExpires).getTime() > Date.now();
     }
 
     isAuth() {
         const expiresAt = localStorage.getItem('expiresAt');
         if (!expiresAt) { return false; }
 
-        return this.getToken() !== null && (new Date(expiresAt).getDate() > Date.now());
+        return this.getToken() !== null && (new Date(expiresAt).getTime() > Date.now());
     }
 }

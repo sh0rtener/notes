@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { afterNextRender, Component, inject } from "@angular/core";
 import { UnauthHeaderComponent } from "../../widgets/unauthorized-header/ui/unauth-header.component";
 import { PrimaryButtonComponent } from "../../shared/ui/button/button/button.component";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
+import { AuthService } from "../../shared/auth/auth.service";
 
 @Component({
     selector: 'app-landing-page',
@@ -11,5 +12,14 @@ import { RouterLink } from "@angular/router";
 })
 
 export class LandingComponent {
-    
+    private readonly authService = inject(AuthService);
+    private readonly router = inject(Router)
+
+    constructor() {
+        afterNextRender(() => {
+            if (this.authService.isAuth()) {
+                this.router.navigate(['/notes']);
+            }
+        });
+    }
 }

@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../../../../shared/auth/auth.service";
 import { AuthModel } from "../../../../shared/auth/auth.model";
 import { ReactiveFormsModule } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-login-form',
@@ -18,6 +19,7 @@ export class LoginFormComponent {
     loginForm = createLoginForm();
     private readonly toastr = inject(ToastrService);
     private readonly authService = inject(AuthService);
+    private readonly router = inject(Router);
 
     onSubmit() {
         if (this.loginForm.invalid) {
@@ -28,8 +30,14 @@ export class LoginFormComponent {
         const model: AuthModel = { username: this.loginForm.controls.login.value!, password: this.loginForm.controls.password.value! };
 
         this.authService.login(model).subscribe({
-            next: () => {
+            next: async () => {
                 this.toastr.success('Вход успешно выполнен!', 'Успешно!')
+
+                await new Promise<void>(resolve => {
+                    setTimeout(resolve, 1000);
+                });
+
+                this.router.navigate(['/'])
             },
             error: (e: Error) => {
                 this.toastr.error(e.message, 'Возникла ошибка во время авторизации')
