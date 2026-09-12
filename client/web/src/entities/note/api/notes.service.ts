@@ -14,4 +14,8 @@ export class NoteApiService {
     getNotes() {
         return this.http.get<ApiResponse<Note[]>>(`${this.apiUrl}/all`);
     }
+
+    completeNote(id: number) {
+        return this.http.patch(`${this.apiUrl}/${id}/complete`, {});
+    }
 }

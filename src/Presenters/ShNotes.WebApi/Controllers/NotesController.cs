@@ -50,9 +50,8 @@ public sealed class NotesController : ControllerBase
         CancellationToken cancellationToken
     )
     {
-        // getNoteFilter.UserId = int.Parse(UserId.ToString());
+        getNoteFilter.UserId = int.Parse(UserId.ToString());
         
-        getNoteFilter.UserId = 7;
         var result = await _mediator.Send(
             new GetNotesQuery() { Filter = getNoteFilter },
             cancellationToken
@@ -132,7 +131,7 @@ public sealed class NotesController : ControllerBase
     )
     {
         var result = await _mediator.Send(
-            new ChangeNoteNameCommand() { Id = id, Name = request.Name },
+            new ChangeNoteNameCommand() { Id = id, Name = request.Name, UserId = UserId },
             cancellationToken
         );
         return this.SendOkResult(result);
@@ -158,7 +157,7 @@ public sealed class NotesController : ControllerBase
     )
     {
         var result = await _mediator.Send(
-            new ChangeNoteDescriptionCommand() { Id = id, Description = request.Description },
+            new ChangeNoteDescriptionCommand() { Id = id, Description = request.Description, UserId = UserId },
             cancellationToken
         );
         return this.SendOkResult(result);
@@ -179,7 +178,7 @@ public sealed class NotesController : ControllerBase
     public async Task<IActionResult> TakeToWork(int id, CancellationToken cancellationToken)
     {
         await _mediator.Send(
-            new ChangeNoteStatusCommand() { Id = id, Status = NoteStatusEnum.OnWork },
+            new ChangeNoteStatusCommand() { Id = id, Status = NoteStatusEnum.OnWork, UserId = UserId },
             cancellationToken
         );
         return this.SendOkResult(NoteStatusEnum.OnWork);
@@ -200,7 +199,7 @@ public sealed class NotesController : ControllerBase
     public async Task<IActionResult> Complete(int id, CancellationToken cancellationToken)
     {
         await _mediator.Send(
-            new ChangeNoteStatusCommand() { Id = id, Status = NoteStatusEnum.Completed },
+            new ChangeNoteStatusCommand() { Id = id, Status = NoteStatusEnum.Completed, UserId = UserId },
             cancellationToken
         );
         return this.SendOkResult(NoteStatusEnum.Completed);
@@ -220,7 +219,7 @@ public sealed class NotesController : ControllerBase
     [ProducesResponseType(typeof(BadRequestApiResponse), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        await _mediator.Send(new RemoveNoteCommand() { Id = id }, cancellationToken);
+        await _mediator.Send(new RemoveNoteCommand() { Id = id, UserId = UserId }, cancellationToken);
         return this.SendOkResult(id);
     }
 }
