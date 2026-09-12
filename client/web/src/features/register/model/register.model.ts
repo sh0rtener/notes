@@ -1,5 +1,4 @@
 export interface RegisterModel {
-    login: string;
+    username: string;
     password: string;
-    passwordRepeat: string;
 }

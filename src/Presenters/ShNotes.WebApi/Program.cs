@@ -2,6 +2,7 @@ using ShNotes.Caching;
 using ShNotes.Data;
 using ShNotes.UseCases;
 using ShNotes.WebApi;
+using ShNotes.WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("Angular");
 app.MapControllers();
 
-// app.UseMiddleware<EndpointHandlerMiddleware>();
+app.UseMiddleware<EndpointHandlerMiddleware>();
 
 app.Run();
