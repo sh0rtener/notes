@@ -1,5 +1,7 @@
-<form class="login-form">
-    <app-input id="login" type="text" label="Логин"></app-input>
-    <app-input id="password" type="password" label="Пароль"></app-input>
-    <app-primary-button>Войти</app-primary-button>
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <app-input id="login" type="text" label="Логин" formControlName="login"
+        [control]="loginForm.controls.login"></app-input>
+    <app-input id="password" type="password" label="Пароль" formControlName="password"
+        [control]="loginForm.controls.password"></app-input>
+    <app-primary-button buttonType="submit">Войти</app-primary-button>
 </form>

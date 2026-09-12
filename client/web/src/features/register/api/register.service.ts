@@ -19,7 +19,7 @@ export class RegisterService {
 
                 switch (error.status) {
                     case 400:
-                        return throwError(() => new Error(response.Message ?? 'Ошибка на стороне клиента!'))
+                        return throwError(() => new Error(response.message ?? 'Ошибка на стороне клиента!'))
                     case 500:
                         return throwError(() => new Error('Ошибка сервера'))
                     default:

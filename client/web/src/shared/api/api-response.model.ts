@@ -1,4 +1,4 @@
 export interface ApiResponse<T> {
-    Message: string;
-    Data: T | null
+    message: string;
+    data: T | null
 }
