@@ -38,7 +38,7 @@ public sealed class NotesController : ControllerBase
     /// <returns>Список заметок относительно заданных фильтров</returns>
     /// <response code="200">Успешно!</response>
     /// <response code="400">Пользовательская ошибка</response>
-    // [Authorize]
+    [Authorize]
     [HttpGet("all")]
     [ProducesResponseType(
         typeof(SuccessApiResponse<IEnumerable<ShortNoteDto>>),

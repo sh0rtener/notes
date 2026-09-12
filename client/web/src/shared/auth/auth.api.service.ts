@@ -18,6 +18,6 @@ export class AuthApiService {
 
     refresh(refreshToken: string) {
         const response = { refreshToken: refreshToken }
-        return this.http.post<ApiResponse<TokenModel>>(`${this.apiUrl}/refresh`, response);
+        return this.http.post<ApiResponse<TokenModel>>(`${this.apiUrl}/refresh-token`, response);
     }
 }
