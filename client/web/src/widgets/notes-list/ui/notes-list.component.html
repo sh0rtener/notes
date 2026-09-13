@@ -1,6 +1,7 @@
 <div class="notes-list">
     <div class="notes-list__header">
         <h2>Список заметок</h2>
+        <app-primary-button (buttonClick)="createTask()">Создать заметку</app-primary-button>
     </div>
     <div class="notes-list__content">
 
@@ -9,3 +10,6 @@
         }
     </div>
 </div>
+<app-modal title="Создать заметку" [(isActive)]="isCreateTaskModal">
+    <app-create-task-form (created)="onNoteCreated($event)"></app-create-task-form>
+</app-modal>

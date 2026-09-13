@@ -8,6 +8,9 @@
     height: 90vh;
 
     .notes-list__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         background: $background-secondary;
         padding: $padding-topbottom $padding-leftright;
     }

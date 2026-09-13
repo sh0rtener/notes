@@ -3,6 +3,7 @@ import { inject, Injectable } from "@angular/core";
 import { environment } from "../../../shared/config/environment";
 import { ApiResponse } from "../../../shared/api/api-response.model";
 import { Note } from "../model/note.model";
+import { CreateTaskModel } from "../model/create-task.model";
 
 @Injectable({
     providedIn: 'root'
@@ -17,5 +18,9 @@ export class NoteApiService {
 
     completeNote(id: number) {
         return this.http.patch(`${this.apiUrl}/${id}/complete`, {});
+    }
+
+    createNote(model: CreateTaskModel) {
+        return this.http.post<ApiResponse<number>>(`${this.apiUrl}`, model);
     }
 }

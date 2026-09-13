@@ -1,0 +1,8 @@
+<div class="create-task">
+    <form [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
+        <app-input id="name" label="Имя" formControlName="name" [control]="createTaskForm.controls.name"></app-input>
+        <app-input id="descr" label="Описание" formControlName="description"
+            [control]="createTaskForm.controls.description"></app-input>
+        <app-primary-button buttonType="submit">Добавить заметку</app-primary-button>
+    </form>
+</div>
