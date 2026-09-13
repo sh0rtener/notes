@@ -6,10 +6,14 @@
     <div class="notes-list__content">
 
         @for (note of notes(); track note.id) {
-        <app-note-card [note]="note" />
+        <app-note-card [note]="note" (click)="updateTask(note)" />
+
         }
     </div>
 </div>
 <app-modal title="Создать заметку" [(isActive)]="isCreateTaskModal">
     <app-create-task-form (created)="onNoteCreated($event)"></app-create-task-form>
+</app-modal>
+<app-modal title="Обновить заметку" [(isActive)]="isUpdateTaskModal">
+    <app-update-task-form [model]="selectedNote" (updated)="onNoteUpdated($event)"></app-update-task-form>
 </app-modal>

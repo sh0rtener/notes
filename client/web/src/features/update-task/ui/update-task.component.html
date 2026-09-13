@@ -1,0 +1,13 @@
+<div class="update-task">
+    @if (this.model().status === 'new')
+    {
+    <app-primary-button (buttonClick)="onWorkNote()">Взять в работу</app-primary-button>
+    }
+
+    @if (this.model().status === 'onwork')
+    {
+    <app-primary-button (buttonClick)="completeNote()">Пометить выполненным</app-primary-button>
+    }
+
+    <app-primary-button type="error" (buttonClick)="removeNote()">Удалить заметку</app-primary-button>
+</div>

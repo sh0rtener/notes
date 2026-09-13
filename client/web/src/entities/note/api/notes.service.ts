@@ -19,6 +19,14 @@ export class NoteApiService {
     completeNote(id: number) {
         return this.http.patch(`${this.apiUrl}/${id}/complete`, {});
     }
+    
+    getToWork(id: number) {
+        return this.http.patch(`${this.apiUrl}/${id}/to-work`, {});
+    }
+
+    remove(id: number) {
+        return this.http.delete(`${this.apiUrl}/${id}`)
+    }
 
     createNote(model: CreateTaskModel) {
         return this.http.post<ApiResponse<number>>(`${this.apiUrl}`, model);
