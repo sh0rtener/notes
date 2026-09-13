@@ -1,0 +1,12 @@
+<div class="modal" [class.disabled]="!isActive()" [class.active]="isActive()">
+    <div class="modal__window">
+        <div class="modal__window-interactive">
+            <p>{{ title() }}</p>
+            <p class="modal__window-interactive__close" (click)="close()">x</p>
+        </div>
+        <hr />
+        <div class="modal__window-content">
+            asdf
+        </div>
+    </div>
+</div>

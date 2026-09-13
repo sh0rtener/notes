@@ -1,0 +1,45 @@
+@use 'variables' as *;
+
+.disabled {
+    display: none;
+}
+
+.active {
+    display: flex;
+}
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.7);
+    width: 100vw;
+    height: 100vh;
+    
+    justify-content: center;
+    align-items: center;
+
+    .modal__window {
+        background: $background-primary;
+        border-radius: $border-radius-px;
+        padding: $padding-topbottom $padding-leftright;
+        min-width: 40vw;
+
+        .modal__window-interactive {
+            display: flex;
+            justify-content: space-between;
+
+            p {
+                font-weight: bold;
+            }
+
+            .modal__window-interactive__close {
+                cursor: pointer;
+                font-weight: bolder;
+                color: $color-error;
+            }
+        }
+
+        .modal__window-content {}
+    }
+}
