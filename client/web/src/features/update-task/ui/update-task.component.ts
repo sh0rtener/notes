@@ -24,7 +24,7 @@ export class UpdateTaskComponent {
         this.noteService.completeNote(this.model().id).subscribe({
             next: (x) => {
                 this.toastr.success('Заметка успешно завершена!')
-                this.router.navigate(['/'])
+                window.location.reload();
             },
             error: (e: Error) => {
                 this.toastr.error(e.message, 'Возникла ошибка во время авторизации')
@@ -37,7 +37,7 @@ export class UpdateTaskComponent {
         this.noteService.getToWork(this.model().id).subscribe({
             next: (x) => {
                 this.toastr.success('Заметка успешно удалена!')
-                this.router.navigate(['/'])
+                window.location.reload();
             },
             error: (e: Error) => {
                 this.toastr.error(e.message, 'Возникла ошибка во время авторизации')
