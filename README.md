@@ -296,6 +296,9 @@ DELETE /notes/{id}
 ### Требования
 
 Для запуска необходимы:
+* Docker
+
+Для доработки необходимы:
 
 * [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 * Node.js
@@ -307,6 +310,12 @@ DELETE /notes/{id}
 ```bash
 git clone https://github.com/sh0rtener/notes.git
 cd notes
+```
+
+### Запуск приложения
+
+```bash
+sudo docker compose -f infra/docker-compose.yml --verbose up --build
 ```
 
 ### Backend
