@@ -14,35 +14,35 @@ services:
     ports:
       - 1111:8080
 
-  notes-api2:
-    image: notes-api2
-    hostname: notes-api2
-    container_name: notes-api2
-    restart: always
-    build:
-      context: ../
-      dockerfile: infra/server/Dockerfile
-    environment:
-      - ConnectionStrings__sqlite=Data Source=/app/data/tmp.db
-    volumes:
-      - ./sqlite:/app/data
-    ports:
-      - 2222:8080
+  # notes-api2:
+  #   image: notes-api2
+  #   hostname: notes-api2
+  #   container_name: notes-api2
+  #   restart: always
+  #   build:
+  #     context: ../
+  #     dockerfile: infra/server/Dockerfile
+  #   environment:
+  #     - ConnectionStrings__sqlite=Data Source=/app/data/tmp.db
+  #   volumes:
+  #     - ./sqlite:/app/data
+  #   ports:
+  #     - 2222:8080
 
-  notes-api3:
-    image: notes-api3
-    hostname: notes-api3
-    container_name: notes-api3
-    restart: always
-    build:
-      context: ../
-      dockerfile: infra/server/Dockerfile
-    environment:
-      - ConnectionStrings__sqlite=Data Source=/app/data/tmp.db
-    volumes:
-      - ./sqlite:/app/data
-    ports:
-      - 3333:8080
+  # notes-api3:
+  #   image: notes-api3
+  #   hostname: notes-api3
+  #   container_name: notes-api3
+  #   restart: always
+  #   build:
+  #     context: ../
+  #     dockerfile: infra/server/Dockerfile
+  #   environment:
+  #     - ConnectionStrings__sqlite=Data Source=/app/data/tmp.db
+  #   volumes:
+  #     - ./sqlite:/app/data
+  #   ports:
+  #     - 3333:8080
 
   web-client:
     image: web-client
