@@ -10,7 +10,7 @@ public sealed class UserDaoConfiguration : IEntityTypeConfiguration<UserDao>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
-        builder.Property(x => x.CredentialId).HasColumnName("credential_id");
+        builder.Property(x => x.CredentialId).HasColumnName("credential_id").IsRequired(false);
         builder.Property(x => x.PasswordSalt).HasColumnName("password_salt");
         builder.Property(x => x.PasswordHash).HasColumnName("password_hash");
         builder.Property(x => x.CredentialCreatedAt).HasColumnName("c_created_at");

@@ -29,9 +29,9 @@ public sealed class UserDao
 {
     public int Id { get; set; }
     public string? Name { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public int CredentialId { get; set; }
+    public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
+    public int? CredentialId { get; set; }
     public string? PasswordSalt { get; set; }
     public string? PasswordHash { get; set; }
-    public DateTime CredentialCreatedAt { get; set; }
+    public DateTime? CredentialCreatedAt { get; set; }
 }

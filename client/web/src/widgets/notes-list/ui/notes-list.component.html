@@ -15,5 +15,5 @@
     <app-create-task-form (created)="onNoteCreated($event)"></app-create-task-form>
 </app-modal>
 <app-modal title="Обновить заметку" [(isActive)]="isUpdateTaskModal">
-    <app-update-task-form [model]="selectedNote" (updated)="onNoteUpdated($event)"></app-update-task-form>
+    <app-update-task-form [model]="selectedNote"></app-update-task-form>
 </app-modal>

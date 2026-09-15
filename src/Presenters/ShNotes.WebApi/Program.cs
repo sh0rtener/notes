@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using ShNotes.Caching;
 using ShNotes.Data;
+using ShNotes.Data.EntityFramework.Contexts;
 using ShNotes.UseCases;
 using ShNotes.WebApi;
 using ShNotes.WebApi.Middlewares;
@@ -17,13 +19,13 @@ builder.Services.AddCaching();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Angular", policy =>
-    {
-        policy
-            .WithOrigins("http://localhost:4200")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-    });
+    options.AddPolicy(
+        "Angular",
+        policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        }
+    );
 });
 
 var app = builder.Build();
@@ -33,6 +35,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    context.Database.Migrate();
 }
 app.UseCors("Angular");
 app.MapControllers();

@@ -16,7 +16,8 @@ public sealed class SqliteScriptProvider : IScriptProvider
                     n.description,
                     n.status,
                     n.created_at,
-                    n.updated_at
+                    n.updated_at,
+                    n.user_id as user_id
                 FROM
                     notes n
                 WHERE
@@ -38,7 +39,8 @@ public sealed class SqliteScriptProvider : IScriptProvider
                 n.description,
                 n.status,
                 n.created_at,
-                n.updated_at
+                n.updated_at,
+                n.user_id
             FROM
                 notes n
             WHERE

@@ -17,5 +17,6 @@ public sealed class NotesDaoConfiguration : IEntityTypeConfiguration<NoteDao>
         builder.Property(x => x.Status).HasColumnName("status");
         builder.Property(x => x.CreatedAt).HasColumnName("created_at");
         builder.Property(x => x.UpdatedAt).HasColumnName("updated_at");
+        builder.Property(x => x.UserId).HasColumnName("user_id");
     }
 }

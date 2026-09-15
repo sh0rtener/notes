@@ -7,6 +7,7 @@ public sealed class AppDbContext : DbContext
 {
     public DbSet<NoteDao> Notes => Set<NoteDao>();
     public DbSet<UserDao> Users => Set<UserDao>();
+    public DbSet<CredentialDao> Credentials => Set<CredentialDao>();
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
